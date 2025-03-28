@@ -1,8 +1,21 @@
 import { createAlbumOfPhoto } from './data.js';
-import { outputPictures } from './thumbnails.js';
+import { outputPictures, container } from './thumbnails.js';
+import { showBigPicture } from './bigpicture.js';
 
-outputPictures(createAlbumOfPhoto());
+const pictures = createAlbumOfPhoto();
+outputPictures(pictures);
 
-// createAlbumOfPhoto();
-//console.log(createAlbumOfPhoto());
+// Делегирование события клика
+container.addEventListener('click', (evt) => {
+  const picture = evt.target.closest('.picture');
+  if (!picture) {
+    return; // Если клик не по карточке, ничего не делаем
+  }
+
+  const pictureId = picture.dataset.id;
+  const pictureData = pictures[pictureId];
+
+  showBigPicture(pictureData);
+});
+
 
